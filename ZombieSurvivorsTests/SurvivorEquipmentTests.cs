@@ -43,6 +43,17 @@ namespace ZombieSurvivorsTests
 			Assert.IsFalse(s.PutInHand(new DummyEquipment()));
 		}
 
+		[Test]
+		public void ReceivingAWoundWhileCarrying2PiecesOfEquipmentInHandDropsTheHeaviest()
+		{
+			var s = new Survivor("Steve");
+			s.PutInHand(new DummyEquipment(weight: 10));
+			s.PutInHand(new DummyEquipment(weight: 9));
+			s.Wound();
+			Assert.AreEqual(9, s.GetEquipment(0).Weight);
+			Assert.IsNull(s.GetEquipment(1));
+		}
+
 		private void AssertMaximumCarryingCapacity(ushort inHand, ushort inReserve)
 		{
 			var s = new Survivor("Steve");
@@ -59,6 +70,12 @@ namespace ZombieSurvivorsTests
 
 		private class DummyEquipment : IEquipment
 		{
+			public short Weight { get; private set; }
+
+			public DummyEquipment(short weight = 0)
+			{
+				Weight = weight;
+			}
 		}
 	}
 }

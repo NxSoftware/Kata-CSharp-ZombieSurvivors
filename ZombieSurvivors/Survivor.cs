@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ZombieSurvivors
 {
@@ -24,8 +25,8 @@ namespace ZombieSurvivors
 		public bool IsDead { get; private set; }
 		public ushort NumberOfRemainingActions { get; private set; } = NumberOfStartingActions;
 
-		private ICollection<IEquipment> _equipmentInHand;
-		private ICollection<IEquipment> _equipmentInReserve;
+		private IList<IEquipment> _equipmentInHand;
+		private IList<IEquipment> _equipmentInReserve;
 
 		public Survivor(string name)
 		{
@@ -46,6 +47,9 @@ namespace ZombieSurvivors
 				else
 				{
 					_maximumEquipmentInHand -= 1;
+					var heaviestEquipment = _equipmentInHand.OrderByDescending(e => e.Weight).FirstOrDefault();
+					if (heaviestEquipment != null)
+						_equipmentInHand.Remove(heaviestEquipment);
 				}
 			}
 		}
@@ -75,6 +79,11 @@ namespace ZombieSurvivors
 		private bool IsAtMaximumCarryingCapacity()
 		{
 			return _equipmentInHand.Count + _equipmentInReserve.Count == MaximumTotalEquipment;
+		}
+
+		public IEquipment GetEquipment(int index)
+		{
+			return _equipmentInHand.ElementAtOrDefault(index);
 		}
 	}
 }
