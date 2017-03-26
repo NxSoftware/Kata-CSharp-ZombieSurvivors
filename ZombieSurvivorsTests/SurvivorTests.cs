@@ -28,6 +28,7 @@ namespace ZombieSurvivorsTests
 		{
 			var s = new Survivor("Steve");
 			s.Wound();
+			Assert.IsFalse(s.IsDead);
 			s.Wound();
 			Assert.IsTrue(s.IsDead);
 		}
