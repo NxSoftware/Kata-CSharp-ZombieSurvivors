@@ -34,6 +34,15 @@ namespace ZombieSurvivorsTests
 			AssertMaximumCarryingCapacity(inHand: 2, inReserve: 3);
 		}
 
+		[Test]
+		public void ReceivingAWoundDecreasesInHandEquipmentCapacity()
+		{
+			var s = new Survivor("Steve");
+			s.Wound();
+			Assert.IsTrue(s.PutInHand(new DummyEquipment()));
+			Assert.IsFalse(s.PutInHand(new DummyEquipment()));
+		}
+
 		private void AssertMaximumCarryingCapacity(ushort inHand, ushort inReserve)
 		{
 			var s = new Survivor("Steve");

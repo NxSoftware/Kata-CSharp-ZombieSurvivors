@@ -7,7 +7,7 @@ namespace ZombieSurvivors
 	{
 		private const ushort MaximumNumberOfWounds = 2;
 		private const ushort NumberOfStartingActions = 3;
-		private const ushort MaximumEquipmentInHand = 2;
+		private ushort _maximumEquipmentInHand = 2;
 		private const ushort MaximumEquipmentInReserve = 5;
 		private const ushort MaximumTotalEquipment = 5;
 
@@ -40,13 +40,19 @@ namespace ZombieSurvivors
 			{
 				NumberOfWounds += 1;
 				if (NumberOfWounds == MaximumNumberOfWounds)
+				{
 					IsDead = true;
+				}
+				else
+				{
+					_maximumEquipmentInHand -= 1;
+				}
 			}
 		}
 
 		public bool PutInHand(IEquipment equipment)
 		{
-			return Carry(equipment, _equipmentInHand, MaximumEquipmentInHand);
+			return Carry(equipment, _equipmentInHand, _maximumEquipmentInHand);
 		}
 
 		public bool PutInReserve(IEquipment equipment)
