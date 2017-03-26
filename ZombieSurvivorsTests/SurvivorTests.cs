@@ -12,6 +12,7 @@ namespace ZombieSurvivorsTests
 			var s = new Survivor("Steve");
 			Assert.AreEqual("Steve", s.Name);
 			Assert.AreEqual(0, s.NumberOfWounds);
+			Assert.IsFalse(s.IsDead);
 		}
 
 		[Test]
@@ -20,6 +21,15 @@ namespace ZombieSurvivorsTests
 			var s = new Survivor("Steve");
 			s.Wound();
 			Assert.AreEqual(1, s.NumberOfWounds);
+		}
+
+		[Test]
+		public void SurvivorWithTwoWoundsDies()
+		{
+			var s = new Survivor("Steve");
+			s.Wound();
+			s.Wound();
+			Assert.IsTrue(s.IsDead);
 		}
 	}
 }

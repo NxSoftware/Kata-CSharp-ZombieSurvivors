@@ -12,7 +12,29 @@ namespace ZombieSurvivors
 			}
 		}
 
-		public ushort NumberOfWounds { get; private set; }
+		private ushort _numberOfWounds = 0;
+		public ushort NumberOfWounds
+		{
+			get
+			{
+				return _numberOfWounds;
+			}
+			private set
+			{
+				if (IsDead == false)
+				{
+					_numberOfWounds = value;
+				}
+			}
+		}
+
+		public bool IsDead
+		{
+			get
+			{
+				return _numberOfWounds == 2;
+			}
+		}
 
 		public Survivor(string name)
 		{
