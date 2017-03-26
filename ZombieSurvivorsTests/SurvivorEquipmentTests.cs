@@ -50,8 +50,25 @@ namespace ZombieSurvivorsTests
 			s.PutInHand(new DummyEquipment(weight: 10));
 			s.PutInHand(new DummyEquipment(weight: 9));
 			s.Wound();
-			Assert.AreEqual(9, s.GetEquipment(0).Weight);
-			Assert.IsNull(s.GetEquipment(1));
+			Assert.AreEqual(9, s.GetInHandEquipment(0).Weight);
+			Assert.IsNull(s.GetInHandEquipment(1));
+		}
+
+		[Test]
+		public void ReceivingAWoundWhileCarrying1InHandAnd4InReserveDropsTheHeaviest()
+		{
+			var s = new Survivor("Steve");
+			s.PutInHand(new DummyEquipment(weight: 9));
+			s.PutInReserve(new DummyEquipment(weight: 10));
+			s.PutInReserve(new DummyEquipment(weight: 8));
+			s.PutInReserve(new DummyEquipment(weight: 7));
+			s.PutInReserve(new DummyEquipment(weight: 6));
+			s.Wound();
+			Assert.AreEqual(9, s.GetInHandEquipment(0).Weight);
+			Assert.AreEqual(8, s.GetReserveEquipment(0).Weight);
+			Assert.AreEqual(7, s.GetReserveEquipment(1).Weight);
+			Assert.AreEqual(6, s.GetReserveEquipment(2).Weight);
+			Assert.IsNull(s.GetReserveEquipment(3));
 		}
 
 		private void AssertMaximumCarryingCapacity(ushort inHand, ushort inReserve)
