@@ -29,33 +29,23 @@ namespace ZombieSurvivorsTests
 		[Test]
 		public void SurvivorCanCarryUpTo5PiecesOfEquipmentInTotal()
 		{
-			// 1 in hand, 4 in reserve
-			var s1 = new Survivor("Steve");
-			Assert.IsTrue(s1.PutInHand(new DummyEquipment()));
-			Assert.IsTrue(s1.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s1.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s1.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s1.PutInReserve(new DummyEquipment()));
-			Assert.IsFalse(s1.PutInHand(new DummyEquipment()));
-			Assert.IsFalse(s1.PutInReserve(new DummyEquipment()));
+			AssertMaximumCarryingCapacity(inHand: 0, inReserve: 5);
+			AssertMaximumCarryingCapacity(inHand: 1, inReserve: 4);
+			AssertMaximumCarryingCapacity(inHand: 2, inReserve: 3);
+		}
 
-			// 2 in hand, 3 in reserve
-			var s2 = new Survivor("Steve");
-			Assert.IsTrue(s2.PutInHand(new DummyEquipment()));
-			Assert.IsTrue(s2.PutInHand(new DummyEquipment()));
-			Assert.IsTrue(s2.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s2.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s2.PutInReserve(new DummyEquipment()));
-			Assert.IsFalse(s2.PutInReserve(new DummyEquipment()));
+		private void AssertMaximumCarryingCapacity(ushort inHand, ushort inReserve)
+		{
+			var s = new Survivor("Steve");
 
-			// 5 in reserve, 0 in hand
-			var s3 = new Survivor("Steve");
-			Assert.IsTrue(s3.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s3.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s3.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s3.PutInReserve(new DummyEquipment()));
-			Assert.IsTrue(s3.PutInReserve(new DummyEquipment()));
-			Assert.IsFalse(s3.PutInHand(new DummyEquipment()));
+			for (int i = 0; i < inReserve; i++)
+				Assert.IsTrue(s.PutInReserve(new DummyEquipment()), "Should be able to carry more items in reserve");
+
+			for (int i = 0; i < inHand; i++)
+				Assert.IsTrue(s.PutInHand(new DummyEquipment()), "Should be able to carry more items in hand");
+
+			Assert.IsFalse(s.PutInReserve(new DummyEquipment()), "Should not be able to carry any more items in reserve");
+			Assert.IsFalse(s.PutInHand(new DummyEquipment()), "Should not be able to carry any more items in hand");
 		}
 
 		private class DummyEquipment : IEquipment
