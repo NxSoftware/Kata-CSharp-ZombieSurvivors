@@ -7,7 +7,9 @@ namespace ZombieSurvivors
 	{
 		private const ushort MaximumNumberOfWounds = 2;
 		private const ushort NumberOfStartingActions = 3;
-		private const ushort MaximumNumberOfEquipment = 5;
+		private const ushort MaximumEquipmentInHand = 2;
+		private const ushort MaximumEquipmentInReserve = 5;
+		private const ushort MaximumTotalEquipment = 5;
 
 		private readonly string _name;
 		public string Name
@@ -22,8 +24,8 @@ namespace ZombieSurvivors
 		public bool IsDead { get; private set; }
 		public ushort NumberOfRemainingActions { get; private set; } = NumberOfStartingActions;
 
-		private List<IEquipment> _equipmentInHand;
-		private List<IEquipment> _equipmentInReserve;
+		private ICollection<IEquipment> _equipmentInHand;
+		private ICollection<IEquipment> _equipmentInReserve;
 
 		public Survivor(string name)
 		{
@@ -44,31 +46,29 @@ namespace ZombieSurvivors
 
 		public bool PutInHand(IEquipment equipment)
 		{
-			if (_equipmentInHand.Count == 2)
-				return false;
-
-			if (IsAtMaximumCarryingCapacity())
-				return false;
-
-			_equipmentInHand.Add(equipment);
-			return true;
+			return Carry(equipment, _equipmentInHand, MaximumEquipmentInHand);
 		}
 
 		public bool PutInReserve(IEquipment equipment)
 		{
-			if (_equipmentInReserve.Count == 5)
+			return Carry(equipment, _equipmentInReserve, MaximumEquipmentInReserve);
+		}
+
+		private bool Carry(IEquipment equipment, ICollection<IEquipment> container, ushort maximumCapacity)
+		{
+			if (container.Count == maximumCapacity)
 				return false;
 
 			if (IsAtMaximumCarryingCapacity())
 				return false;
 
-			_equipmentInReserve.Add(equipment);
+			container.Add(equipment);
 			return true;
 		}
 
 		private bool IsAtMaximumCarryingCapacity()
 		{
-			return _equipmentInHand.Count + _equipmentInReserve.Count == MaximumNumberOfEquipment;
+			return _equipmentInHand.Count + _equipmentInReserve.Count == MaximumTotalEquipment;
 		}
 	}
 }
