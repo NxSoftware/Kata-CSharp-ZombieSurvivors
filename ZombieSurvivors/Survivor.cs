@@ -18,5 +18,10 @@ namespace ZombieSurvivors
 		{
 			_name = name;
 		}
+
+		public void Wound()
+		{
+			NumberOfWounds += 1;
+		}
 	}
 }

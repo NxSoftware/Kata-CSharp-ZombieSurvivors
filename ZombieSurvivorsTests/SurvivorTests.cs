@@ -13,5 +13,13 @@ namespace ZombieSurvivorsTests
 			Assert.AreEqual("Steve", s.Name);
 			Assert.AreEqual(0, s.NumberOfWounds);
 		}
+
+		[Test]
+		public void CanWoundSurvivor()
+		{
+			var s = new Survivor("Steve");
+			s.Wound();
+			Assert.AreEqual(1, s.NumberOfWounds);
+		}
 	}
 }
