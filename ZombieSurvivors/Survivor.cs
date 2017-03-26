@@ -12,6 +12,8 @@ namespace ZombieSurvivors
 			}
 		}
 
+		public ushort NumberOfWounds { get; private set; }
+
 		public Survivor(string name)
 		{
 			_name = name;
