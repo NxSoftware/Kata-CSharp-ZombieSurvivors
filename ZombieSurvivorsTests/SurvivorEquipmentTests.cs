@@ -21,6 +21,18 @@ namespace ZombieSurvivorsTests
 			Assert.IsFalse(s.PutInHand(new DummyEquipment()));
 		}
 
+		[Test]
+		public void SurvivorCanCarryUpTo5PiecesOfEquipmentInReserve()
+		{
+			var s = new Survivor("Steve");
+			Assert.IsTrue(s.PutInReserve(new DummyEquipment()));
+			Assert.IsTrue(s.PutInReserve(new DummyEquipment()));
+			Assert.IsTrue(s.PutInReserve(new DummyEquipment()));
+			Assert.IsTrue(s.PutInReserve(new DummyEquipment()));
+			Assert.IsTrue(s.PutInReserve(new DummyEquipment()));
+			Assert.IsFalse(s.PutInReserve(new DummyEquipment()));
+		}
+
 		private class DummyEquipment : IEquipment
 		{
 		}

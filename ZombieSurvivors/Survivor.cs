@@ -23,11 +23,13 @@ namespace ZombieSurvivors
 		public ushort NumberOfEmptyEquipmentSlots { get; private set; } = 5;
 
 		private List<IEquipment> _equipmentInHand;
+		private List<IEquipment> _equipmentInReserve;
 
 		public Survivor(string name)
 		{
 			_name = name;
 			_equipmentInHand = new List<IEquipment>();
+			_equipmentInReserve = new List<IEquipment>();
 		}
 
 		public void Wound()
@@ -46,6 +48,15 @@ namespace ZombieSurvivors
 				return false;
 
 			_equipmentInHand.Add(equipment);
+			return true;
+		}
+
+		public bool PutInReserve(IEquipment equipment)
+		{
+			if (_equipmentInReserve.Count == 5)
+				return false;
+
+			_equipmentInReserve.Add(equipment);
 			return true;
 		}
 	}
