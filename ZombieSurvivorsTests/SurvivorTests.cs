@@ -13,6 +13,7 @@ namespace ZombieSurvivorsTests
 			Assert.AreEqual("Steve", s.Name);
 			Assert.AreEqual(0, s.NumberOfWounds);
 			Assert.IsFalse(s.IsDead);
+			Assert.AreEqual(3, s.NumberOfRemainingActions);
 		}
 
 		[Test]

@@ -36,6 +36,8 @@ namespace ZombieSurvivors
 			}
 		}
 
+		public ushort NumberOfRemainingActions { get; private set; } = 3;
+
 		public Survivor(string name)
 		{
 			_name = name;
