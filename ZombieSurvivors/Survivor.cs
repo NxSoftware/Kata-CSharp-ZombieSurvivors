@@ -18,6 +18,7 @@ namespace ZombieSurvivors
 		public ushort NumberOfWounds { get; private set; }
 		public bool IsDead { get; private set; }
 		public ushort NumberOfRemainingActions { get; private set; } = NumberOfStartingActions;
+		public ushort NumberOfEmptyEquipmentSlots { get; private set; } = 5;
 
 		public Survivor(string name)
 		{
