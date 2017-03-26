@@ -6,42 +6,46 @@ namespace ZombieSurvivorsTests
 {
 	public class SurvivorTests
 	{
+		private Survivor sut;
+
+		[SetUp]
+		public void Setup()
+		{
+			sut = new Survivor("Steve");
+		}
+
 		[Test]
 		public void CanCreateSurvivor()
 		{
-			var s = new Survivor("Steve");
-			Assert.AreEqual("Steve", s.Name);
-			Assert.AreEqual(0, s.NumberOfWounds);
-			Assert.IsFalse(s.IsDead);
-			Assert.AreEqual(3, s.NumberOfRemainingActions);
+			Assert.AreEqual("Steve", sut.Name);
+			Assert.AreEqual(0, sut.NumberOfWounds);
+			Assert.IsFalse(sut.IsDead);
+			Assert.AreEqual(3, sut.NumberOfRemainingActions);
 		}
 
 		[Test]
 		public void CanWoundSurvivor()
 		{
-			var s = new Survivor("Steve");
-			s.Wound();
-			Assert.AreEqual(1, s.NumberOfWounds);
+			sut.Wound();
+			Assert.AreEqual(1, sut.NumberOfWounds);
 		}
 
 		[Test]
 		public void SurvivorWithTwoWoundsDies()
 		{
-			var s = new Survivor("Steve");
-			s.Wound();
-			Assert.IsFalse(s.IsDead);
-			s.Wound();
-			Assert.IsTrue(s.IsDead);
+			sut.Wound();
+			Assert.IsFalse(sut.IsDead);
+			sut.Wound();
+			Assert.IsTrue(sut.IsDead);
 		}
 
 		[Test]
 		public void WoundsReceivedAfterDyingAreIgnored()
 		{
-			var s = new Survivor("Steve");
-			s.Wound();
-			s.Wound();
-			s.Wound();
-			Assert.AreEqual(2, s.NumberOfWounds);
+			sut.Wound();
+			sut.Wound();
+			sut.Wound();
+			Assert.AreEqual(2, sut.NumberOfWounds);
 		}
 	}
 }
