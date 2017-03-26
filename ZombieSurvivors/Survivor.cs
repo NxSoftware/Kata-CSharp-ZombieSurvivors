@@ -4,6 +4,7 @@ namespace ZombieSurvivors
 	public class Survivor
 	{
 		private const ushort MaximumNumberOfWounds = 2;
+		private const ushort NumberOfStartingActions = 3;
 
 		private readonly string _name;
 		public string Name
@@ -16,7 +17,7 @@ namespace ZombieSurvivors
 
 		public ushort NumberOfWounds { get; private set; }
 		public bool IsDead { get; private set; }
-		public ushort NumberOfRemainingActions { get; private set; } = 3;
+		public ushort NumberOfRemainingActions { get; private set; } = NumberOfStartingActions;
 
 		public Survivor(string name)
 		{
