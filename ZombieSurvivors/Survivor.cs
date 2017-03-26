@@ -20,7 +20,6 @@ namespace ZombieSurvivors
 		public ushort NumberOfWounds { get; private set; }
 		public bool IsDead { get; private set; }
 		public ushort NumberOfRemainingActions { get; private set; } = NumberOfStartingActions;
-		public ushort NumberOfEmptyEquipmentSlots { get; private set; } = 5;
 
 		private List<IEquipment> _equipmentInHand;
 		private List<IEquipment> _equipmentInReserve;
@@ -47,6 +46,9 @@ namespace ZombieSurvivors
 			if (_equipmentInHand.Count == 2)
 				return false;
 
+			if (_equipmentInHand.Count + _equipmentInReserve.Count == 5)
+				return false;
+
 			_equipmentInHand.Add(equipment);
 			return true;
 		}
@@ -54,6 +56,9 @@ namespace ZombieSurvivors
 		public bool PutInReserve(IEquipment equipment)
 		{
 			if (_equipmentInReserve.Count == 5)
+				return false;
+
+			if (_equipmentInHand.Count + _equipmentInReserve.Count == 5)
 				return false;
 
 			_equipmentInReserve.Add(equipment);
