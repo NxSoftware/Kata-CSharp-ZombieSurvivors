@@ -7,6 +7,7 @@ namespace ZombieSurvivors
 	{
 		private const ushort MaximumNumberOfWounds = 2;
 		private const ushort NumberOfStartingActions = 3;
+		private const ushort MaximumNumberOfEquipment = 5;
 
 		private readonly string _name;
 		public string Name
@@ -46,7 +47,7 @@ namespace ZombieSurvivors
 			if (_equipmentInHand.Count == 2)
 				return false;
 
-			if (_equipmentInHand.Count + _equipmentInReserve.Count == 5)
+			if (IsAtMaximumCarryingCapacity())
 				return false;
 
 			_equipmentInHand.Add(equipment);
@@ -58,11 +59,16 @@ namespace ZombieSurvivors
 			if (_equipmentInReserve.Count == 5)
 				return false;
 
-			if (_equipmentInHand.Count + _equipmentInReserve.Count == 5)
+			if (IsAtMaximumCarryingCapacity())
 				return false;
 
 			_equipmentInReserve.Add(equipment);
 			return true;
+		}
+
+		private bool IsAtMaximumCarryingCapacity()
+		{
+			return _equipmentInHand.Count + _equipmentInReserve.Count == MaximumNumberOfEquipment;
 		}
 	}
 }
