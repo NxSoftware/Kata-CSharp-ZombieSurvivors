@@ -32,5 +32,15 @@ namespace ZombieSurvivorsTests
 			s.Wound();
 			Assert.IsTrue(s.IsDead);
 		}
+
+		[Test]
+		public void WoundsReceivedAfterDyingAreIgnored()
+		{
+			var s = new Survivor("Steve");
+			s.Wound();
+			s.Wound();
+			s.Wound();
+			Assert.AreEqual(2, s.NumberOfWounds);
+		}
 	}
 }
