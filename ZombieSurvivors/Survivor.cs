@@ -3,6 +3,8 @@ namespace ZombieSurvivors
 {
 	public class Survivor
 	{
+		private const ushort MaximumNumberOfWounds = 2;
+
 		private readonly string _name;
 		public string Name
 		{
@@ -12,30 +14,8 @@ namespace ZombieSurvivors
 			}
 		}
 
-		private ushort _numberOfWounds = 0;
-		public ushort NumberOfWounds
-		{
-			get
-			{
-				return _numberOfWounds;
-			}
-			private set
-			{
-				if (IsDead == false)
-				{
-					_numberOfWounds = value;
-				}
-			}
-		}
-
-		public bool IsDead
-		{
-			get
-			{
-				return _numberOfWounds == 2;
-			}
-		}
-
+		public ushort NumberOfWounds { get; private set; }
+		public bool IsDead { get; private set; }
 		public ushort NumberOfRemainingActions { get; private set; } = 3;
 
 		public Survivor(string name)
@@ -45,7 +25,12 @@ namespace ZombieSurvivors
 
 		public void Wound()
 		{
-			NumberOfWounds += 1;
+			if (IsDead == false)
+			{
+				NumberOfWounds += 1;
+				if (NumberOfWounds == MaximumNumberOfWounds)
+					IsDead = true;
+			}
 		}
 	}
 }
