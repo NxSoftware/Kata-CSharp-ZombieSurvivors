@@ -106,7 +106,7 @@ namespace ZombieSurvivorsTests
 		}
 
 		[Test]
-		public void ReceivingAWoundWhileCarrying2InHandAnd3InReserveDropsTheHeaviestInHand()
+		public void ReceivingAWoundWhileCarrying2InHandAnd3InReserveMovesTheHeaviestToReserve()
 		{
 			var s = new Survivor("Steve");
 			s.PutInHand(new DummyEquipment(weight: 9));
@@ -117,9 +117,9 @@ namespace ZombieSurvivorsTests
 			s.Wound();
 			Assert.AreEqual(9, s.GetInHandEquipment(0).Weight);
 			Assert.IsNull(s.GetInHandEquipment(1));
-			Assert.AreEqual(11, s.GetReserveEquipment(0).Weight);
-			Assert.AreEqual(8, s.GetReserveEquipment(1).Weight);
-			Assert.AreEqual(7, s.GetReserveEquipment(2).Weight);
+			Assert.AreEqual(8, s.GetReserveEquipment(0).Weight);
+			Assert.AreEqual(7, s.GetReserveEquipment(1).Weight);
+			Assert.AreEqual(10, s.GetReserveEquipment(2).Weight);
 		}
 
 		private void AssertMaximumCarryingCapacity(ushort inHand, ushort inReserve)

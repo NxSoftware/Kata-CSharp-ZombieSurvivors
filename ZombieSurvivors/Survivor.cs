@@ -50,8 +50,16 @@ namespace ZombieSurvivors
 
 					if (_equipmentInHand.Count > _maximumEquipmentInHand)
 					{
-						var heaviest = _equipmentInHand.OrderByDescending(e => e.Weight).FirstOrDefault();
-						_equipmentInHand.Remove(heaviest);
+						var heaviestInHand = _equipmentInHand.OrderByDescending(e => e.Weight).FirstOrDefault();
+						var heaviestInReserve = _equipmentInReserve.OrderByDescending(e => e.Weight).FirstOrDefault();
+
+						_equipmentInHand.Remove(heaviestInHand);
+
+						if (heaviestInReserve?.Weight > heaviestInHand.Weight)
+						{
+							_equipmentInReserve.Remove(heaviestInReserve);
+							_equipmentInReserve.Add(heaviestInHand);
+						}
 					}
 					else
 					{
